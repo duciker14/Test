@@ -54,6 +54,7 @@ public class MainApp {
 				prevMax = shape;
 			}
 		}
+		System.out.println(prevMax.chuVi());
 		if (prevMax instanceof Circle) {
 			String str1 = String.format("Hinh tron co chu vi lon nhat la: %s -- %f ", prevMax.ten, prevMax.chuVi());
 			System.out.println(str1);

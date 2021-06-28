@@ -1,14 +1,11 @@
 package test.dev.first;
 
-public abstract class Person {
-	String name;
-	int age;
-	
+public class Person {
+	protected String name;
+	protected int age;
 	public Person(String name, int age) {
-		super();
 		this.name = name;
 		this.age = age;
 	}
-	abstract String getClassName();
-	
+
 }

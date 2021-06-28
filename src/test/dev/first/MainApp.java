@@ -4,83 +4,94 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+/**
+ * Bai kiem tra cuoi mon
+ * @author Duc Nguyen Quang
+ *
+ */
 
 public class MainApp {
-	// Input List
-	static List<Person> input(int stuNumber, int teaNumber){
+	// Ham nhap mang
+	static List<Person> input(int a, int b){
 		List<Person> personList = new ArrayList<Person>();
 		Scanner sc = new Scanner(System.in);
-		System.out.println("=========Student===========");
-		for (int i = 0; i < stuNumber; i++) {
-			System.out.println("Student: Nhap vao lan luot ten,tuoi,MSSV,DiemTB:");
+		for (int i = 0; i < a; i++) {
+			System.out.printf("Nhap vao Student thu %d: ",i+1);
+			System.out.println("Nhap ten:");
 			String name = sc.next();
+			System.out.println("Nhap tuoi:");
 			int age = sc.nextInt();
+			System.out.println("Nhap vao ma so sinh vien:");
 			String idStudent = sc.next();
-			float diemTrungBinh = sc.nextFloat();
-			Person stuPer = new Student(name, age, idStudent, diemTrungBinh);
-			personList.add(stuPer);
+			System.out.println("Nhap vao diem trung binh:");
+			double diemTrungBinh = sc.nextDouble();
+			Person std = new Student(name, age, idStudent, diemTrungBinh);
+			personList.add(std);
 		}
-		System.out.println("==========Teacher========");
-		for (int i = 0; i < teaNumber; i++) {
-			System.out.println("Teacher: Nhap vao lan luot ten,tuoi,MSGV,He so luong");
+		for (int i = 0; i < b; i++) {
+			System.out.printf("Nhap vao Teacher thu %d: ",i+1);
+			System.out.println("Nhap ten: ");
 			String name = sc.next();
+			System.out.println("Nhap tuoi: ");
 			int age = sc.nextInt();
+			System.out.println("Nhap vao MSGV:");
 			String idGV = sc.next();
-			float heSoLuong = sc.nextFloat();
-			Person teaPer = new Teacher(name, age, idGV, heSoLuong);
-			personList.add(teaPer);	
+			System.out.println("Nhap vao he so luong: ");
+			double heSoLuong = sc.nextDouble();
+			Person teacher = new Teacher(name, age, idGV, heSoLuong);
+			personList.add(teacher);
 		}
 		return personList;
 	}
-	//Print
+	//In mang
 	static void print(List<Person> personList) {
 		for (Person person : personList) {
-			String str = person.toString();
-			System.out.println(str);
+			System.out.println(person.toString());
 		}
 	}
-	// FindMax
-	static void find(List<Person> personList) {
+	
+	static void findMax(List<Person> personList) {
 		Iterator<Person> it = personList.iterator();
-		float maxStu = 0;
-		float maxTea = 0;
-		String preStu = personList.get(0).name;
-		String preTea = personList.get(0).name;
+		Student std = null;
+		Teacher tc = null;
 		while (it.hasNext()) {
 			Person person = it.next();
-			if (person instanceof Student == true){
-				Student stu;
-				stu = (Student) person;
-				if (stu.getDiemTrungBinh() > maxStu) {
-					maxStu = stu.getDiemTrungBinh();
-					preStu = stu.name;
+			if (person instanceof Student == true) {
+				Student student = (Student) person;
+				if (std == null) {
+					std = student;
+				}else if (std.getDiemTrungBinh() < student.getDiemTrungBinh()) {
+					std = student;
 				}
-			}else {
-				Teacher tea;
-				tea = (Teacher) person;
-				if (tea.getHeSoLuong() > maxTea) {
-					maxTea = tea.getHeSoLuong();
-					preTea = tea.name;
+			}
+			if (person instanceof Teacher == true) {
+				Teacher teacher = (Teacher) person;
+				if (tc == null) {
+					tc = teacher;
+				}else if (tc.getHeSoLuong() < teacher.getHeSoLuong()) {
+					tc = teacher;
 				}
 			}
 		}
-		String strStu = String.format("SV Diem cao nhat: %s -- %f",preStu,maxStu);
-		String strTea = String.format("GV co HSL cao nhat: %s -- %f", preTea,maxTea);
-		System.out.println(strStu);
-		System.out.println(strTea);
+		System.out.println("Student co diem trung binh cao nhat la: ");
+		System.out.println(std.toString());
+		System.out.println("Teacher co diem trung binh cao nhat la:");
+		System.out.println(tc.toString());
 	}
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<Person> perList;
+		List<Person> personList = new ArrayList<Person>();
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Nhap vao so GV: ");
-		int numberStu = sc.nextInt();
-		System.out.println("Nhap vao so SV: ");
-		int numberTea = sc.nextInt();
-		perList = input(numberStu, numberTea);
-		print(perList);
-		find(perList);
+		
+		System.out.println("Nhap vao so Student: ");
+		int totalStudent = sc.nextInt();
+		System.out.println("Nhap vao so Teacher: ");
+		int totalTeacher = sc.nextInt();
+		
+		personList = input(totalStudent, totalTeacher);
+		print(personList);
+		findMax(personList);
 	}
+
 }
-	
